@@ -156,9 +156,10 @@ async def get_user_progress(session_id: str):
 @api_router.post("/demo-transaction", response_model=DemoTransaction)
 async def create_demo_transaction(input: DemoTransactionCreate):
     transaction_dict = input.model_dump()
+    # Add required fields for DemoTransaction
+    transaction_dict["status"] = "success"  # Demo always succeeds
+    transaction_dict["timestamp"] = datetime.now(timezone.utc).isoformat()
     transaction_obj = DemoTransaction(**transaction_dict)
-    transaction_obj.status = "success"  # Demo always succeeds
-    transaction_obj.timestamp = datetime.now(timezone.utc).isoformat()
     doc = transaction_obj.model_dump()
     await db.demo_transactions.insert_one(doc)
     return transaction_obj
