@@ -14,14 +14,15 @@ export const API = `${BACKEND_URL}/api`;
 
 // Generate or get session ID
 export const getSessionId = () => {
-  let sessionId = localStorage.getItem('sessionId');
+  let sessionId = localStorage.getItem("sessionId");
   if (!sessionId) {
-    sessionId = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now();
-    localStorage.setItem('sessionId', sessionId);
+    sessionId = "user_" + Math.random().toString(36).substr(2, 9) + Date.now();
+    localStorage.setItem("sessionId", sessionId);
   }
   return sessionId;
 };
 
+// Main App component
 function App() {
   const [initialized, setInitialized] = useState(false);
 
@@ -31,7 +32,7 @@ function App() {
         await axios.post(`${API}/init-data`);
         setInitialized(true);
       } catch (e) {
-        console.error('Error initializing data:', e);
+        console.error("Error initializing data:", e);
         setInitialized(true); // Continue anyway
       }
     };
@@ -49,6 +50,7 @@ function App() {
     );
   }
 
+  // Main application routes
   return (
     <div className="App">
       <BrowserRouter>
@@ -65,4 +67,5 @@ function App() {
   );
 }
 
+// Export the App component as default
 export default App;
